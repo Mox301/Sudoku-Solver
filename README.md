@@ -3,3 +3,5 @@ This project solves the most difficult Sudoku puzzles using Backtracking algorit
 
 # Installation
 This project is written in java, so be sure that Java SE installed in your device.
+
+# Usage
