@@ -1,6 +1,6 @@
 public class Sudoku_Solver {
 	public static void main(String[] args) {
-		int[][] boarod = {{8,0,0,1,0,0,0,7,0},
+		int[][] grid = {{8,0,0,1,0,0,0,7,0},
 				          {0,2,0,0,4,0,8,0,0},
 				          {0,6,0,7,0,0,0,0,0},
 				          {0,0,0,4,7,0,9,0,8},
@@ -9,37 +9,37 @@ public class Sudoku_Solver {
 				          {0,8,0,6,0,4,1,0,0},
 				          {9,0,0,0,0,7,2,0,4},
 				          {0,0,5,8,1,0,0,0,6}};
-		showGrid(boarod);
-		solve(boarod);
+		showGrid(grid);
+		solve(grid);
 		System.out.println("______________________________________");
 		System.out.println("Solution: ");
-		showGrid(boarod);
+		showGrid(grid);
 	}
 	
-	public static void showGrid(int[][] boarod) {
-		for(int i = 0; i < boarod.length; i++) {
+	public static void showGrid(int[][] grid) {
+		for(int i = 0; i < grid.length; i++) {
 			if(i % 3 == 0 && i != 0) {
 				System.out.println("_______________________________");
 			}
-			for(int j = 0; j < boarod[0].length; j++) {
+			for(int j = 0; j < grid[0].length; j++) {
 				if(j % 3 == 0 && j != 0) {
 					System.out.print(" | ");
 				}
 				if(j == 8) {
-					System.out.println(boarod[i][j]);
+					System.out.println(grid[i][j]);
 				} else {
-					System.out.print(boarod[i][j] + "  ");
+					System.out.print(grid[i][j] + "  ");
 				}
 			}
 		}
 	
 	}
 	
-	public static int[] findEmpty(int[][] boarod) {
+	public static int[] findEmpty(int[][] grid) {
 		int[] arr = new int[2];
-		for(int i = 0; i < boarod.length; i++) {
-			for(int j = 0; j < boarod[i].length; j++) {
-				if(boarod[i][j] == 0) {
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[i].length; j++) {
+				if(grid[i][j] == 0) {
 					
 					arr[0] = i;
 					arr[1] = j;
@@ -50,15 +50,15 @@ public class Sudoku_Solver {
 		return null;
 	}
 	
-	public static boolean valid(int[][] boarod, int num, int[] pos) {
+	public static boolean valid(int[][] grid, int num, int[] pos) {
 		// check the rows
-		for(int i = 0; i < boarod[0].length; i++) {
-			if(boarod[pos[0]][i] == num && pos[1] != i)
+		for(int i = 0; i < grid[0].length; i++) {
+			if(grid[pos[0]][i] == num && pos[1] != i)
 				return false;
 		}
 		// check the cols.
-		for(int i = 0; i < boarod.length; i++) {
-			if(boarod[i][pos[1]] == num && pos[0] != i)
+		for(int i = 0; i < grid.length; i++) {
+			if(grid[i][pos[1]] == num && pos[0] != i)
 				return false;
 		}
 		
@@ -68,7 +68,7 @@ public class Sudoku_Solver {
 		
 		for(int i = box_y*3; i < box_y*3+3; i++) {
 			for(int j = box_x*3; j < box_x*3+3; j++) {
-				if(boarod[i][j] == num && pos[0]!= i && pos[1] != j) {
+				if(grid[i][j] == num && pos[0]!= i && pos[1] != j) {
 					return false;
 				}
 			}
@@ -77,9 +77,9 @@ public class Sudoku_Solver {
 		return true;
 	}
 	
-	public static boolean solve(int[][] boarod) {
+	public static boolean solve(int[][] grid) {
 		int row = -1, col = -1;
-		int[] find = findEmpty(boarod);
+		int[] find = findEmpty(grid);
 		if(find == null) {
 			return true;
 		} else {
@@ -89,12 +89,12 @@ public class Sudoku_Solver {
 		
 		for(int i = 1; i <= 9; i++) {
 			int[] arr = {row, col};
-			if(valid(boarod, i, arr)) {
-				boarod[row][col] = i;
-				if(solve(boarod)) {
+			if(valid(grid, i, arr)) {
+				grid[row][col] = i;
+				if(solve(grid)) {
 					return true;
 				}
-				boarod[row][col] = 0;
+				grid[row][col] = 0;
 			}
 		}
 		return false;
